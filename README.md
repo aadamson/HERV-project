@@ -3,7 +3,13 @@ HERV-project
 
 ## Local setup
 
-### Install nhmmer
+### Getting the HMMs
+
+```bash
+git clone git@github.com:aadamson/HERV-project.git
+```
+
+### Installing nhmmer
 
 #### On MacBook (Intel architecture)
 
@@ -30,14 +36,14 @@ mv ./src/nhmmer ~/bin
 src ~/.cshrc
 ```
 
-## Getting hg38
+### Getting hg38
 
 ```bash
 curl -O http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
 gunzip hg38.fa.gz
 ```
 
-## Using nhmmer
+### Using nhmmer
 
 ```bash
 nhmmer --cut_ga PATH_TO_HMM PATH_TO_GENOME_FA 
