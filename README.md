@@ -62,7 +62,7 @@ set path=( ~ \
          )
 ```
 Once you add this, exit vim (by typing escape and then :q) and call
-```
+```bash
 source ~/.cshrc
 ```
 
