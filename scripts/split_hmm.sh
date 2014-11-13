@@ -9,10 +9,5 @@ fi
 initial_dir=$(pwd)
 cd "$OUT_DIR"
 
-csplit --digits=4 -f "$PREFIX" --quiet "$HMM_FILE" "/\/\//" "{*}"
+csplit --digits=4 -f "$PREFIX" --quiet "$HMM_FILE" "/\/\//+1" "{*}"
 
-hmm_files="$OUT_DIR/$PREFIX*"
-
-for f in $hmm_files; do
-  sed -i '/\/\//d' "$f"
-done
