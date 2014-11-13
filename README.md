@@ -3,7 +3,13 @@ HERV-project
 
 ## Local setup
 
-### Install nhmmer
+### Getting the HMMs
+
+```bash
+git clone git@github.com:aadamson/HERV-project.git
+```
+
+### Installing nhmmer
 
 #### On MacBook (Intel architecture)
 
@@ -30,28 +36,28 @@ mv ./src/nhmmer ~/bin
 src ~/.cshrc
 ```
 
-## Getting hg38
+### Getting hg38
 
 ```bash
 curl -O http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
 gunzip hg38.fa.gz
 ```
 
-## Using nhmmer
+### Using nhmmer
 
 ```bash
 nhmmer --cut_ga PATH_TO_HMM PATH_TO_GENOME_FA 
 ```
 
-To extract DFAM HMMs:
+### Batch nhmmer
+
 ```bash
-curl ftp://selab.janelia.org/pub/dfam/Release/Dfam_1.2/Dfam.hmm.gz
-tar xzf Dfam.hmm.gz
-csplit --digits=4 -f dfam_hmm --quiet Dfam.hmm "/\/\//" "{*}"
-remove_delimiters.sh .
+./scripts/get_hits.sh -e PATTERN_FOR_HMM_FILES -g PATH_TO_GENOME_FASTA -o OUTPUT_DIRECTORY
 ```
 
-To rename DFAM HMMs according to the names given in the Dfam file:
+Note that the "-o" argument is optional. I think the pattern for HMM files only allows wildcards (*) rather than bona fide regular expressions.
+
+To try it out, get hg38 and nhmmer as described above, and call
 ```bash
-rename.sh PATH_TO_HMMS OUTPUT_DIRECTORY
+./scripts/get_hits.sh -e ./hmm/models/U7.hmm -g ./hg38.fa
 ```
