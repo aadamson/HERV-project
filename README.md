@@ -48,3 +48,16 @@ gunzip hg38.fa.gz
 ```bash
 nhmmer --cut_ga PATH_TO_HMM PATH_TO_GENOME_FA 
 ```
+
+### Batch nhmmer
+
+```bash
+./scripts/get_hits.sh -e PATTERN_FOR_HMM_FILES -g PATH_TO_GENOME_FASTA -o OUTPUT_DIRECTORY
+```
+
+Note that the "-o" argument is optional. I think the pattern for HMM files only allows wildcards (*) rather than bona fide regular expressions.
+
+To try it out, get hg38 and nhmmer as described above, and call
+```bash
+./scripts/get_hits.sh -e ./hmm/models/U7.hmm -g ./hg38.fa
+```
