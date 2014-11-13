@@ -32,7 +32,7 @@ if [ ! -z "$out_dir"] && [ ! -d "$out_dir" ]; then
 fi
 
 for f in $erv_hmms; do
-  hits=$(nhammer --cut_ga "$f" "$genome_fa")
+  hits=$(nhmmer --cut_ga "$f" "$genome_fa")
   
   if [ ! -z "$out_dir"]; then
     file_name="${f##*/}"
@@ -41,5 +41,7 @@ for f in $erv_hmms; do
     if [ ! -f "$out_file"]; then 
       echo "$hits" > "$out_file"
     fi
+  else
+    echo "$hits"
   fi
 done
