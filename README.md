@@ -32,8 +32,38 @@ cd ./hmmer-3.1b1-linux-intel-x86_64
 ./configure
 make
 make check
+mkdir -p ~/bin
 mv ./src/nhmmer ~/bin
-src ~/.cshrc
+source ~/.cshrc
+```
+
+If you still can't call nhmmer, verify that ~/bin is in your shell's PATH:
+
+Open ~/.cshrc in vim (vim ~/.cshrc) or some other editor. Go to the section that looks like 
+```
+set path=( ~ \
+         OTHER_PATH \
+         ANOTHER_PATH \
+         ... \
+         )
+```
+On corn, this should be around line 45.
+There should be a line that looks like
+```
+      ~/bin \
+```
+If there isn't, add one so that the section now has something like
+```
+set path=( ~ \
+         OTHER_PATH \
+         ANOTHER_PATH \
+         ... \
+         ~/bin \
+         )
+```
+Once you add this, exit vim (by typing escape and then :q) and call
+```
+source ~/.cshrc
 ```
 
 ### Getting hg38
