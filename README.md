@@ -1,6 +1,10 @@
 HERV-project
 ============
 
+# TODO
+
+- [ ] Modify get_hits.sh to take either a genome fasta or a pattern matching a number of genome fastas and then for each HMM supplied, create a subdirectory in the output directory whose name is the name of the model (e.g. HERVK). For each genome, the script should create a file (named after the genome) in this subdirectory containing the result of calling nhmmer on that genome. 
+
 ## Local setup
 
 ### Getting the HMMs
