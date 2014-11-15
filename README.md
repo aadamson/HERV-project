@@ -1,6 +1,10 @@
 HERV-project
 ============
 
+# TODO
+
+- [ ] Modify get_hits.sh to take either a genome fasta or a pattern matching a number of genome fastas and then for each HMM supplied, create a subdirectory in the output directory whose name is the name of the model (e.g. HERVK). For each genome, the script should create a file (named after the genome) in this subdirectory containing the result of calling nhmmer on that genome. 
+
 ## Local setup
 
 ### Getting the HMMs
@@ -32,8 +36,38 @@ cd ./hmmer-3.1b1-linux-intel-x86_64
 ./configure
 make
 make check
+mkdir -p ~/bin
 mv ./src/nhmmer ~/bin
-src ~/.cshrc
+source ~/.cshrc
+```
+
+If you still can't call nhmmer, verify that ~/bin is in your shell's PATH:
+
+Open ~/.cshrc in vim (vim ~/.cshrc) or some other editor. Go to the section that looks like 
+```
+set path=( ~ \
+         OTHER_PATH \
+         ANOTHER_PATH \
+         ... \
+         )
+```
+On corn, this should be around line 45.
+There should be a line that looks like
+```
+      ~/bin \
+```
+If there isn't, add one so that the section now has something like
+```
+set path=( ~ \
+         OTHER_PATH \
+         ANOTHER_PATH \
+         ... \
+         ~/bin \
+         )
+```
+Once you add this, exit vim (by typing escape and then :q) and call
+```bash
+source ~/.cshrc
 ```
 
 ### Getting hg38
