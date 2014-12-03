@@ -1,20 +1,25 @@
-ERV_HMM_DIR="/farmshare/user_data/aadamson/cs273a_project/hmm/models/erv"
+if [ -d "./src" ]; then
+  PATH=./src:$PATH
+fi
+
+ERV_HMM_DIR="/farmshare/user_data/aadamson/HERV-project/hmm/models/erv"
 
 # Default arguments
-erv_hmms="$ERV_HMM_DIR/*.hmm"
-genome_fa="/farmshare/user_data/aadamson/cs273a_project/hg19.fa"
+hmms=$(echo "$ERV_HMM_DIR/*.hmm")
+genome_fas="/farmshare/user_data/aadamson/HERV-project/hg19.fa"
 out_dir=""
 
-while getopts ":g:e:o:" opt; do
+while getopts ":g:h:o:" opt; do
   case $opt in
-    e)
-      erv_hmms="$OPTARG"
+    h)
+      hmms="${OPTARG}"
       ;;
     g)
-      genome_fa="$OPTARG"
+      genome_fas="${OPTARG}"
       ;;
     o)
       out_dir="$OPTARG"
+      echo "$out_dir"
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -27,21 +32,32 @@ while getopts ":g:e:o:" opt; do
   esac
 done
 
-if [ ! -z "$out_dir"] && [ ! -d "$out_dir" ]; then
+if [ ! -z "$out_dir" ] && [ ! -d "$out_dir" ]; then
   mkdir "$out_dir"
 fi
 
-for f in $erv_hmms; do
-  hits=$(nhmmer --cut_ga "$f" "$genome_fa")
-  
-  if [ ! -z "$out_dir"]; then
-    file_name="${f##*/}"
-    out_file="$out_dir/$file_name.hits"
+for f in $hmms; do
+  curr_dir=""
+  base=$(basename "$f" ".hmm")
 
-    if [ ! -f "$out_file"]; then 
-      echo "$hits" > "$out_file"
-    fi
-  else
-    echo "$hits"
+  if [ ! -z "$out_dir" ]; then
+    curr_dir="$out_dir/$base"
+    mkdir -p "$curr_dir"
   fi
+
+  for g in $genome_fas; do
+    hits=$(nhmmer --cut_ga "$f" "$g")
+    genome_base=$(basename "$g" ".fa")
+
+    if [ ! -z "$curr_dir" ]; then
+      file_name=$base"_"$genome_base
+      out_file="$curr_dir/$file_name.hits"
+
+      if [ ! -f "$out_file" ]; then 
+        echo "$hits" > "$out_file"
+      fi
+    else
+      echo "$hits"
+    fi
+  done
 done
